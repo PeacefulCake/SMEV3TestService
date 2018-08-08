@@ -7,6 +7,7 @@ using System.Text;
 
 namespace SMEV3TestService
 {
+    // В WSDL контракт сервиса зовется PortType'ом
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "ISimple" in both code and config file together.
     [ServiceContract(Namespace = "urn:FAA.SimpleService", Name = "ServiceContractName", ConfigurationName = "ServiceContractConfigurationName")]
     public interface ISimple
