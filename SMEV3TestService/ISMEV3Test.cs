@@ -15,7 +15,7 @@ namespace SMEV3TestService
     using System.Runtime.Serialization;
     using System.Xml;
 
-    [DataContract(Name="Void", Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    /*[DataContract(Name="Void", Namespace=SMEV3Const.BasicsNamespace)]
     [KnownType(typeof(SmevFault))]
     public partial class Void : object, IExtensibleDataObject
     {
@@ -35,7 +35,7 @@ namespace SMEV3TestService
         }
     }
     
-    [DataContract(Name="SmevFault", Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [DataContract(Name="SmevFault", Namespace=SMEV3Const.BasicsNamespace)]
     public partial class SmevFault : Void
     {
         
@@ -68,45 +68,45 @@ namespace SMEV3TestService
                 this.DescriptionField = value;
             }
         }
-    }
+    }*/
         
-    [ServiceContract(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/1.2", ConfigurationName="SMEVMessageExchangePortType")]
+    [ServiceContract(Namespace=SMEV3Const.ServiceNamespace, ConfigurationName="SMEVMessageExchangePortType")]
     public interface SMEVMessageExchangePortType
     {
-        
-        [OperationContract(Action="urn:SendRequest", ReplyAction="*")]
-        [FaultContract(typeof(SmevFault), Action="urn:SendRequest", Name="TransactionCodeInvalid", Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/faults/1.2")]
+
+        //[FaultContract(typeof(SmevFault), Action = "urn:SendRequest", Name = "TransactionCodeInvalid", Namespace = SMEV3Const.FaultsNamespace)]
+        [OperationContract(Action="urn:SendRequest", ReplyAction= "urn:SendRequestResponse")]
         [XmlSerializerFormat()]
         SendRequestResponse SendRequest(SendRequestRequest request);
         
-        [OperationContract(Action="urn:SendResponse", ReplyAction="*")]
+        [OperationContract(Action="urn:SendResponse", ReplyAction= "urn:SendResponseResponse")]
         [XmlSerializerFormat()]
         SendResponseResponse SendResponse(SendResponseRequest request);
         
         // CODEGEN: Контракт генерации сообщений с пространством имен упаковщика (urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2) сообщения GetStatusRequest не соответствует значению по умолчанию (urn://x-artefacts-smev-gov-ru/services/message-exchange/1.2).
-        [OperationContract(Action="urn:GetStatus", ReplyAction="*")]
+        [OperationContract(Action="urn:GetStatus", ReplyAction= "urn:GetStatusResponse")]
         [XmlSerializerFormat()]
         GetStatusResponse GetStatus(GetStatusRequest request);
         
         // CODEGEN: Контракт генерации сообщений с пространством имен упаковщика (urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2) сообщения GetRequestRequest не соответствует значению по умолчанию (urn://x-artefacts-smev-gov-ru/services/message-exchange/1.2).
-        [OperationContract(Action="urn:GetRequest", ReplyAction="*")]
+        [OperationContract(Action="urn:GetRequest", ReplyAction= "urn:GetRequestResponse")]
         [XmlSerializerFormat()]
         GetRequestResponse GetRequest(GetRequestRequest request);
                 
         // CODEGEN: Контракт генерации сообщений с пространством имен упаковщика (urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2) сообщения GetResponseRequest не соответствует значению по умолчанию (urn://x-artefacts-smev-gov-ru/services/message-exchange/1.2).
-        [OperationContract(Action="urn:GetResponse", ReplyAction="*")]
+        [OperationContract(Action="urn:GetResponse", ReplyAction= "urn:GetResponseResponse")]
         [XmlSerializerFormat()]
         GetResponseResponse GetResponse(GetResponseRequest request);
         
         // CODEGEN: Контракт генерации сообщений с пространством имен упаковщика (urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2) сообщения AckRequest не соответствует значению по умолчанию (urn://x-artefacts-smev-gov-ru/services/message-exchange/1.2).
-        [OperationContract(Action="urn:Ack", ReplyAction="*")]
+        [OperationContract(Action="urn:Ack", ReplyAction= "urn:AckResponse")]
         [XmlSerializerFormat()]
         AckResponse Ack(AckRequest request);
     }
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class SenderProvidedRequestData
     {
         
@@ -221,7 +221,7 @@ namespace SMEV3TestService
         }
         
         /// <remarks/>
-        [XmlElement(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=5)]
+        [XmlElement(Namespace=SMEV3Const.BasicsNamespace, Order=5)]
         public System.Xml.XmlElement MessagePrimaryContent
         {
             get
@@ -249,7 +249,7 @@ namespace SMEV3TestService
         }
         
         /// <remarks/>
-        [XmlElement("AttachmentHeaderList", typeof(AttachmentHeaderList), Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=7)]
+        [XmlElement("AttachmentHeaderList", typeof(AttachmentHeaderList), Namespace=SMEV3Const.BasicsNamespace, Order=7)]
         public AttachmentHeaderType[] AttachmentHeaderList
         {
             get
@@ -263,7 +263,7 @@ namespace SMEV3TestService
         }
         
         /// <remarks/>
-        [XmlElement("RefAttachmentHeaderList", typeof(RefAttachmentHeaderList), Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=8)]
+        [XmlElement("RefAttachmentHeaderList", typeof(RefAttachmentHeaderList), Namespace=SMEV3Const.BasicsNamespace, Order=8)]
         public RefAttachmentHeaderType[] RefAttachmentHeaderList
         {
             get
@@ -321,7 +321,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.BasicsNamespace)]
     public partial class AttachmentHeaderList
     {
         
@@ -344,7 +344,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(Namespace=SMEV3Const.BasicsNamespace)]
     public partial class AttachmentHeaderType
     {
         
@@ -399,7 +399,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(Namespace=SMEV3Const.BasicsNamespace)]
     public partial class FSAuthInfo
     {
         
@@ -470,7 +470,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(Namespace=SMEV3Const.BasicsNamespace)]
     public partial class AttachmentContentType
     {
         
@@ -510,14 +510,14 @@ namespace SMEV3TestService
     /// <remarks/>
     [XmlInclude(typeof(SmevFault))]
     [Serializable()]
-    [XmlType(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(Namespace=SMEV3Const.BasicsNamespace)]
     public partial class Void
     {
     }
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(Namespace=SMEV3Const.BasicsNamespace)]
     public partial class SmevFault : Void
     {
         
@@ -526,7 +526,7 @@ namespace SMEV3TestService
         private string descriptionField;
         
         /// <remarks/>
-        /*[XmlElement(Order=0)]
+        [XmlElement(Order=0)]
         public string Code
         {
             get
@@ -551,12 +551,12 @@ namespace SMEV3TestService
             {
                 this.descriptionField = value;
             }
-        }*/
+        }
     }
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(Namespace=SMEV3Const.BasicsNamespace)]
     public partial class RefAttachmentHeaderType
     {
         
@@ -627,7 +627,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.BasicsNamespace)]
     public partial class RefAttachmentHeaderList
     {
         
@@ -650,7 +650,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class SenderProvidedRequestDataBusinessProcessMetadata
     {
         
@@ -673,7 +673,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.BasicsNamespace)]
     public partial class AttachmentContentList
     {
         
@@ -696,7 +696,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class MessageMetadata
     {
         
@@ -863,7 +863,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(Namespace=SMEV3Const.TypesNamespace)]
     public enum MessageTypeType
     {
         
@@ -879,7 +879,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class MessageMetadataSender
     {
         
@@ -902,7 +902,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class MessageMetadataRecipient
     {
         
@@ -925,7 +925,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(Namespace=SMEV3Const.BasicsNamespace)]
     public enum InteractionStatusType
     {
         
@@ -960,17 +960,17 @@ namespace SMEV3TestService
         messageIsDelivered,
     }
     
-    [MessageContract(WrapperName="SendRequestRequest", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="SendRequestRequest", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class SendRequestRequest
     {
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=0)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=0)]
         public SenderProvidedRequestData SenderProvidedRequestData;
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=1)]
-        [XmlElement("AttachmentContentList", typeof(AttachmentContentList), Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+        [MessageBodyMember(Namespace=SMEV3Const.BasicsNamespace, Order=1)]
+        [XmlElement("AttachmentContentList", typeof(AttachmentContentList), Namespace=SMEV3Const.BasicsNamespace)]
         public AttachmentContentType[] AttachmentContentList;
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=2)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=2)]
         public System.Xml.XmlElement CallerInformationSystemSignature;
         
         public SendRequestRequest()
@@ -985,14 +985,14 @@ namespace SMEV3TestService
         }
     }
     
-    [MessageContract(WrapperName="SendRequestResponse", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="SendRequestResponse", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class SendRequestResponse
     {
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=0)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=0)]
         public MessageMetadata MessageMetadata;
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=1)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=1)]
         public System.Xml.XmlElement SMEVSignature;
         
         public SendRequestResponse()
@@ -1008,7 +1008,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class SenderProvidedResponseData
     {
         
@@ -1055,9 +1055,9 @@ namespace SMEV3TestService
         [XmlElement("PersonalSignature", typeof(System.Xml.XmlElement), Order=2)]
         [XmlElement("RequestRejected", typeof(SenderProvidedResponseDataRequestRejected), Order=2)]
         [XmlElement("RequestStatus", typeof(SenderProvidedResponseDataRequestStatus), Order=2)]
-        [XmlElement("AttachmentHeaderList", typeof(AttachmentHeaderList), Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=2)]
-        [XmlElement("MessagePrimaryContent", typeof(System.Xml.XmlElement), Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=2)]
-        [XmlElement("RefAttachmentHeaderList", typeof(RefAttachmentHeaderList), Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=2)]
+        [XmlElement("AttachmentHeaderList", typeof(AttachmentHeaderList), Namespace=SMEV3Const.BasicsNamespace, Order=2)]
+        [XmlElement("MessagePrimaryContent", typeof(System.Xml.XmlElement), Namespace=SMEV3Const.BasicsNamespace, Order=2)]
+        [XmlElement("RefAttachmentHeaderList", typeof(RefAttachmentHeaderList), Namespace=SMEV3Const.BasicsNamespace, Order=2)]
         [XmlChoiceIdentifier("ItemsElementName")]
         public object[] Items
         {
@@ -1103,7 +1103,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class AsyncProcessingStatus
     {
         
@@ -1174,7 +1174,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class SenderProvidedResponseDataRequestRejected
     {
         
@@ -1213,7 +1213,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(Namespace=SMEV3Const.TypesNamespace)]
     public enum RejectCode
     {
         
@@ -1232,7 +1232,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class SenderProvidedResponseDataRequestStatus
     {
         
@@ -1287,7 +1287,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class SenderProvidedResponseDataRequestStatusStatusParameter
     {
         
@@ -1326,7 +1326,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IncludeInSchema=false)]
+    [XmlType(Namespace=SMEV3Const.TypesNamespace, IncludeInSchema=false)]
     public enum ItemsChoiceType
     {
         
@@ -1343,33 +1343,30 @@ namespace SMEV3TestService
         RequestStatus,
         
         /// <remarks/>
-        [XmlEnum("urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2:Attachmen" +
-            "tHeaderList")]
+        [XmlEnum(SMEV3Const.BasicsNamespace + ":AttachmentHeaderList")]
         AttachmentHeaderList,
         
         /// <remarks/>
-        [XmlEnum("urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2:MessagePr" +
-            "imaryContent")]
+        [XmlEnum(SMEV3Const.BasicsNamespace + ":MessagePrimaryContent")]
         MessagePrimaryContent,
         
         /// <remarks/>
-        [XmlEnum("urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2:RefAttach" +
-            "mentHeaderList")]
+        [XmlEnum(SMEV3Const.BasicsNamespace + ":RefAttachmentHeaderList")]
         RefAttachmentHeaderList,
     }
     
-    [MessageContract(WrapperName="SendResponseRequest", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="SendResponseRequest", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class SendResponseRequest
     {
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=0)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=0)]
         public SenderProvidedResponseData SenderProvidedResponseData;
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=1)]
-        [XmlElement("AttachmentContentList", typeof(AttachmentContentList), Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+        [MessageBodyMember(Namespace=SMEV3Const.BasicsNamespace, Order=1)]
+        [XmlElement("AttachmentContentList", typeof(AttachmentContentList), Namespace=SMEV3Const.BasicsNamespace)]
         public AttachmentContentType[] AttachmentContentList;
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=2)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=2)]
         public System.Xml.XmlElement CallerInformationSystemSignature;
         
         public SendResponseRequest()
@@ -1384,14 +1381,14 @@ namespace SMEV3TestService
         }
     }
     
-    [MessageContract(WrapperName="SendResponseResponse", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="SendResponseResponse", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class SendResponseResponse
     {
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=0)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=0)]
         public MessageMetadata MessageMetadata;
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=1)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=1)]
         public System.Xml.XmlElement SMEVSignature;
         
         public SendResponseResponse()
@@ -1407,7 +1404,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.BasicsNamespace)]
     public partial class Timestamp
     {
         
@@ -1446,7 +1443,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class SmevAsyncProcessingMessage
     {
         
@@ -1485,7 +1482,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class AsyncProcessingStatusData
     {
         
@@ -1523,15 +1520,15 @@ namespace SMEV3TestService
     }
     
     [EditorBrowsable(EditorBrowsableState.Advanced)]
-    [MessageContract(WrapperName="GetStatusRequest", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="GetStatusRequest", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class GetStatusRequest
     {
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=0)]
-        [XmlElement(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+        [MessageBodyMember(Namespace=SMEV3Const.BasicsNamespace, Order=0)]
+        [XmlElement(Namespace=SMEV3Const.BasicsNamespace)]
         public Timestamp Timestamp;
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=1)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=1)]
         public System.Xml.XmlElement CallerInformationSystemSignature;
         
         public GetStatusRequest()
@@ -1546,11 +1543,11 @@ namespace SMEV3TestService
     }
     
     [EditorBrowsable(EditorBrowsableState.Advanced)]
-    [MessageContract(WrapperName="GetStatusResponse", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="GetStatusResponse", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class GetStatusResponse
     {
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=0)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=0)]
         public SmevAsyncProcessingMessage SmevAsyncProcessingMessage;
         
         public GetStatusResponse()
@@ -1565,7 +1562,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.BasicsNamespace)]
     public partial class MessageTypeSelector
     {
         
@@ -1652,7 +1649,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class GetRequestResponseRequestMessage
     {
         
@@ -1662,7 +1659,7 @@ namespace SMEV3TestService
         
         /// <remarks/>
         [XmlElement("Request", typeof(Request), Order=0)]
-        [XmlElement("AttachmentContentList", typeof(AttachmentContentList), Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=0)]
+        [XmlElement("AttachmentContentList", typeof(AttachmentContentList), Namespace=SMEV3Const.BasicsNamespace, Order=0)]
         public object[] Items
         {
             get
@@ -1692,7 +1689,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class Request
     {
         
@@ -1737,7 +1734,7 @@ namespace SMEV3TestService
         }
         
         /// <remarks/>
-        [XmlArray(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=2)]
+        [XmlArray(Namespace=SMEV3Const.BasicsNamespace, Order=2)]
         [XmlArrayItem("FSAttachment", IsNullable=false)]
         public FSAuthInfo[] FSAttachmentsList
         {
@@ -1795,15 +1792,15 @@ namespace SMEV3TestService
     }
     
     [EditorBrowsable(EditorBrowsableState.Advanced)]
-    [MessageContract(WrapperName="GetRequestRequest", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="GetRequestRequest", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class GetRequestRequest
     {
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=0)]
-        [XmlElement(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+        [MessageBodyMember(Namespace=SMEV3Const.BasicsNamespace, Order=0)]
+        [XmlElement(Namespace=SMEV3Const.BasicsNamespace)]
         public MessageTypeSelector MessageTypeSelector;
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=1)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=1)]
         public System.Xml.XmlElement CallerInformationSystemSignature;
         
         public GetRequestRequest()
@@ -1818,11 +1815,11 @@ namespace SMEV3TestService
     }
     
     [EditorBrowsable(EditorBrowsableState.Advanced)]
-    [MessageContract(WrapperName="GetRequestResponse", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="GetRequestResponse", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class GetRequestResponse
     {
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=0)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=0)]
         public GetRequestResponseRequestMessage RequestMessage;
         
         public GetRequestResponse()
@@ -1837,7 +1834,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class GetResponseResponseResponseMessage
     {
         
@@ -1862,7 +1859,7 @@ namespace SMEV3TestService
         }
         
         /// <remarks/>
-        [XmlElement(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=1)]
+        [XmlElement(Namespace=SMEV3Const.BasicsNamespace, Order=1)]
         public AttachmentContentList AttachmentContentList
         {
             get
@@ -1892,7 +1889,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.TypesNamespace)]
     public partial class Response
     {
         
@@ -1983,7 +1980,7 @@ namespace SMEV3TestService
         }
         
         /// <remarks/>
-        [XmlArray(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=5)]
+        [XmlArray(Namespace=SMEV3Const.BasicsNamespace, Order=5)]
         [XmlArrayItem("FSAttachment", IsNullable=false)]
         public FSAuthInfo[] FSAttachmentsList
         {
@@ -2027,15 +2024,15 @@ namespace SMEV3TestService
     }
     
     [EditorBrowsable(EditorBrowsableState.Advanced)]
-    [MessageContract(WrapperName="GetResponseRequest", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="GetResponseRequest", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class GetResponseRequest
     {
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=0)]
-        [XmlElement(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+        [MessageBodyMember(Namespace=SMEV3Const.BasicsNamespace, Order=0)]
+        [XmlElement(Namespace=SMEV3Const.BasicsNamespace)]
         public MessageTypeSelector MessageTypeSelector;
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=1)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=1)]
         public System.Xml.XmlElement CallerInformationSystemSignature;
         
         public GetResponseRequest()
@@ -2050,11 +2047,11 @@ namespace SMEV3TestService
     }
 
     [EditorBrowsable(EditorBrowsableState.Advanced)]
-    [MessageContract(WrapperName="GetResponseResponse", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="GetResponseResponse", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class GetResponseResponse
     {
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=0)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=0)]
         [XmlElement("ResponseMessage")]
         public GetResponseResponseResponseMessage Item;
         
@@ -2070,7 +2067,7 @@ namespace SMEV3TestService
     
     /// <remarks/>
     [Serializable()]
-    [XmlType(AnonymousType=true, Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+    [XmlType(AnonymousType=true, Namespace=SMEV3Const.BasicsNamespace)]
     public partial class AckTargetMessage
     {
         
@@ -2140,15 +2137,15 @@ namespace SMEV3TestService
     }
     
     [EditorBrowsable(EditorBrowsableState.Advanced)]
-    [MessageContract(WrapperName="AckRequest", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="AckRequest", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class AckRequest
     {
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2", Order=0)]
-        [XmlElement(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/basic/1.2")]
+        [MessageBodyMember(Namespace=SMEV3Const.BasicsNamespace, Order=0)]
+        [XmlElement(Namespace=SMEV3Const.BasicsNamespace)]
         public AckTargetMessage AckTargetMessage;
         
-        [MessageBodyMember(Namespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", Order=1)]
+        [MessageBodyMember(Namespace=SMEV3Const.TypesNamespace, Order=1)]
         public System.Xml.XmlElement CallerInformationSystemSignature;
         
         public AckRequest()
@@ -2163,7 +2160,7 @@ namespace SMEV3TestService
     }
     
     [EditorBrowsable(EditorBrowsableState.Advanced)]
-    [MessageContract(WrapperName="AckResponse", WrapperNamespace="urn://x-artefacts-smev-gov-ru/services/message-exchange/types/1.2", IsWrapped=true)]
+    [MessageContract(WrapperName="AckResponse", WrapperNamespace=SMEV3Const.TypesNamespace, IsWrapped=true)]
     public partial class AckResponse
     {
         

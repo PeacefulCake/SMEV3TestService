@@ -7,7 +7,7 @@ using System.ServiceModel;
 
 namespace SMEV3TestService
 {
-    [ServiceBehavior(Name = "SMEV3TestService", Namespace = "urn://x-artefacts-smev-gov-ru/services/message-exchange/1.2", IncludeExceptionDetailInFaults = true)]
+    [ServiceBehavior(Name = "SMEV3TestService", Namespace = SMEV3Const.ServiceNamespace, IncludeExceptionDetailInFaults = true)]
     public class SMEV3Test : SMEVMessageExchangePortType
     {
         public AckResponse Ack(AckRequest request)
@@ -32,7 +32,8 @@ namespace SMEV3TestService
 
         public SendRequestResponse SendRequest(SendRequestRequest request)
         {
-            throw new NotImplementedException();
+            return new SendRequestResponse();
+            //throw new NotImplementedException();
         }
 
         public SendResponseResponse SendResponse(SendResponseRequest request)

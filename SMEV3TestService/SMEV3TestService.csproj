@@ -64,12 +64,14 @@
     <Content Include="Service1.svc" />
     <Content Include="Simple.svc" />
     <Content Include="SMEV3Service.svc" />
+    <Content Include="SMEV3Simple.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ISimple.cs" />
+    <Compile Include="ISMEV3Simple.cs" />
     <Compile Include="ISMEV3Test.cs" />
     <Compile Include="Service1.svc.cs">
       <DependentUpon>Service1.svc</DependentUpon>
@@ -79,8 +81,12 @@
     <Compile Include="Simple.svc.cs">
       <DependentUpon>Simple.svc</DependentUpon>
     </Compile>
+    <Compile Include="SMEV3Const.cs" />
     <Compile Include="SMEV3Service.svc.cs">
       <DependentUpon>SMEV3Service.svc</DependentUpon>
+    </Compile>
+    <Compile Include="SMEV3Simple.svc.cs">
+      <DependentUpon>SMEV3Simple.svc</DependentUpon>
     </Compile>
     <Compile Include="SMEV3Test.cs" />
   </ItemGroup>
